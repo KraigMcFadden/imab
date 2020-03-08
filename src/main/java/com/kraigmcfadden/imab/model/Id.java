@@ -8,7 +8,15 @@ public class Id implements Comparable {
     private final String id;
 
     public Id() {
-        this.id = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString());
+    }
+
+    private Id(String id) {
+        this.id = id;
+    }
+
+    public static Id of(String id) {
+        return new Id(id);
     }
 
     public String getId() {
