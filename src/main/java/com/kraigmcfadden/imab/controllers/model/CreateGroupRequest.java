@@ -1,6 +1,6 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.controllers.model;
 
-public class CreateBudgetGroupRequest {
+public class CreateGroupRequest {
 
     private String name;
 

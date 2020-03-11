@@ -1,18 +1,21 @@
 package com.kraigmcfadden.imab.controllers;
 
 import com.google.common.base.Throwables;
-import com.kraigmcfadden.imab.model.Account;
-import com.kraigmcfadden.imab.services.AccountDisplayService;
+import com.kraigmcfadden.imab.controllers.model.CreateAccountRequest;
+import com.kraigmcfadden.imab.controllers.model.CreateBudgetRequest;
+import com.kraigmcfadden.imab.controllers.model.CreateGroupRequest;
+import com.kraigmcfadden.imab.model.*;
 import com.kraigmcfadden.imab.services.AccountManagementService;
+import com.kraigmcfadden.imab.services.PersistenceService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.Optional;
 
 @RestController
 public class BasicController {
@@ -32,26 +35,91 @@ public class BasicController {
             "</body>\n" +
             "</html>";
 
-    private final AccountDisplayService accountDisplayService;
-    private final AccountManagementService accountManagementService;
+    private final PersistenceService persistenceService;
 
     @Autowired
-    public BasicController(AccountDisplayService accountDisplayService, AccountManagementService accountManagementService) {
-        this.accountDisplayService = accountDisplayService;
-        this.accountManagementService = accountManagementService;
+    public BasicController(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.GET, produces = "text/html")
-    public ResponseEntity<String> showMeDefaultAccount() {
-        log.info("Incoming request");
-        try {
-            Account defaultAccount = accountManagementService.createDefaultAccount("Kraig", 5077.96);
-            return ResponseEntity.ok(
-                    HTML_TEMPLATE.replace(INJECTION_TOKEN, accountDisplayService.accountToHtmlString(defaultAccount))
-            );
-        } catch (Exception e) {
-            log.error("Failed to show default account", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Throwables.getStackTraceAsString(e));
+    @RequestMapping(path = "/accounts", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<String> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
+        log.info("Account creation requested");
+        Account account = new Account(createAccountRequest.getName(), createAccountRequest.getStartingCash());
+        account.addGroup(new Group("My Budgets"));
+        persistenceService.saveAccount(account);
+        return ResponseEntity.ok(account.getId().getId());
+    }
+
+    @RequestMapping(path = "/accounts/{accountId}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Account> getAccount(@PathVariable String accountId) {
+        log.info("Account " + accountId + " requested");
+        Optional<Account> accountOptional = persistenceService.getAccountById(Id.of(accountId));
+        return accountOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().body(null));
+    }
+
+    // TODO: make group its own resource with its own persistence service
+    @RequestMapping(path = "/accounts/{accountId}/groups", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<String> createGroup(@PathVariable String accountId,
+                                              @RequestBody CreateGroupRequest createGroupRequest) {
+        log.info("Group creation requested");
+        Optional<Account> accountOptional = persistenceService.getAccountById(Id.of(accountId));
+        if (accountOptional.isPresent()) {
+            Group group = new Group(createGroupRequest.getName());
+            accountOptional.get().addGroup(group);
+            return ResponseEntity.ok(group.getId().getId());
+        } else {
+            return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @RequestMapping(path = "/accounts/{accountId}/groups/{groupId}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Group> getGroup(@PathVariable String accountId,
+                                          @PathVariable String groupId) {
+        log.info("Group " + groupId + " requested");
+        Optional<Account> accountOptional = persistenceService.getAccountById(Id.of(accountId));
+        if (accountOptional.isPresent()) {
+            Optional<Group> groupOptional = accountOptional.get().getGroup(Id.of(groupId));
+            if (groupOptional.isPresent()) {
+                return ResponseEntity.ok(groupOptional.get());
+            }
+        }
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    // TODO: make budget its own resource with its own persistence service
+    @RequestMapping(path = "/accounts/{accountId}/groups/{groupId}/budgets", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<String> createBudget(@PathVariable String accountId,
+                                               @PathVariable String groupId,
+                                               @RequestBody CreateBudgetRequest createBudgetRequest) {
+        log.info("Budget creation requested");
+        Optional<Account> accountOptional = persistenceService.getAccountById(Id.of(accountId));
+        if (accountOptional.isPresent()) {
+            Optional<Group> groupOptional = accountOptional.get().getGroup(Id.of(groupId));
+            if (groupOptional.isPresent()) {
+                Budget budget = new Budget(createBudgetRequest.getName(), createBudgetRequest.getLimit(), createBudgetRequest.getTimespan());
+                groupOptional.get().addChild(budget);
+                return ResponseEntity.created(URI.create("/accounts/" + accountId + "/groups/" + groupId + "/budgets/" + budget.getId().getId())).build();
+            }
+        }
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    @RequestMapping(path = "/accounts/{accountId}/groups/{groupId}/budgets/{budgetId}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Budget> getBudget(@PathVariable String accountId,
+                                            @PathVariable String groupId,
+                                            @PathVariable String budgetId) {
+        log.info("Budget " + budgetId + " requested");
+        Optional<Account> accountOptional = persistenceService.getAccountById(Id.of(accountId));
+        if (accountOptional.isPresent()) {
+            Optional<Group> groupOptional = accountOptional.get().getGroup(Id.of(groupId));
+            if (groupOptional.isPresent()) {
+                Optional<Aggregatable> childOptional = groupOptional.get().getChild(Id.of(budgetId));
+                if (childOptional.isPresent() && childOptional.get() instanceof Budget) {
+                    return ResponseEntity.ok((Budget) childOptional.get());
+                }
+            }
+        }
+        return ResponseEntity.badRequest().body(null);
     }
 }

@@ -3,7 +3,7 @@ package com.kraigmcfadden.imab.services;
 import com.google.common.collect.Maps;
 import com.kraigmcfadden.imab.model.Account;
 import com.kraigmcfadden.imab.model.Budget;
-import com.kraigmcfadden.imab.model.BudgetGroup;
+import com.kraigmcfadden.imab.model.Group;
 import com.kraigmcfadden.imab.model.Id;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PersistenceService {
 
     private final Map<Id, Account> accounts = Maps.newHashMap();
-    private final Map<Id, BudgetGroup> budgetGroups = Maps.newHashMap();
+    private final Map<Id, Group> budgetGroups = Maps.newHashMap();
     private final Map<Id, Budget> budgets = Maps.newHashMap();
 
     public Optional<Account> getAccountById(Id id) {
@@ -25,12 +25,12 @@ public class PersistenceService {
         accounts.put(account.getId(), account);
     }
 
-    public Optional<BudgetGroup> getBudgetGroupById(Id id) {
+    public Optional<Group> getBudgetGroupById(Id id) {
         return Optional.ofNullable(budgetGroups.get(id));
     }
 
-    public void saveBudgetGroup(BudgetGroup budgetGroup) {
-        budgetGroups.put(budgetGroup.getId(), budgetGroup);
+    public void saveBudgetGroup(Group group) {
+        budgetGroups.put(group.getId(), group);
     }
 
     public Optional<Budget> getBudgetById(Id id) {

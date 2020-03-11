@@ -1,16 +1,15 @@
 package com.kraigmcfadden.imab.model;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Account {
 
     private final Id id;
-    private final Map<Id, BudgetGroup> budgetGroups;
+    private final Map<Id, Group> groups;
     private String name;
     private double cash;
     private double limit;
@@ -20,7 +19,7 @@ public class Account {
         this.id = new Id();
         this.name = name;
         this.cash = cash;
-        this.budgetGroups = Maps.newHashMap();
+        this.groups = Maps.newHashMap();
     }
 
     public Id getId() {
@@ -51,56 +50,27 @@ public class Account {
         cash += amount;
     }
 
-    public Collection<BudgetGroup> getBudgetGroups() {
-        return budgetGroups.values();
+    public Collection<Group> getGroups() {
+        return groups.values();
     }
 
-    public void addBudgetGroup(BudgetGroup budgetGroup) {
-        budgetGroups.put(budgetGroup.getId(), budgetGroup);
-        limit += budgetGroup.getLimit();
-        current += budgetGroup.getCurrent();
+    public Optional<Group> getGroup(Id id) {
+        return Optional.ofNullable(groups.get(id));
     }
 
-    public void removeBudgetGroup(BudgetGroup budgetGroup) {
-        budgetGroups.remove(budgetGroup.getId());
-        limit -= budgetGroup.getLimit();
-        current -= budgetGroup.getCurrent();
+    public void addGroup(Group group) {
+        groups.put(group.getId(), group);
+        limit += group.getLimit();
+        current += group.getCurrent();
+    }
+
+    public void removeGroup(Group group) {
+        groups.remove(group.getId());
+        limit -= group.getLimit();
+        current -= group.getCurrent();
     }
 
     public boolean isOverLimit() {
         return current > limit;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder {
-        private String name;
-        private double startingCash;
-        private List<BudgetGroup> groups = Lists.newArrayList();
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withStartingCash(double startingCash) {
-            this.startingCash = startingCash;
-            return this;
-        }
-
-        public Builder withBudgetGroup(BudgetGroup group) {
-            this.groups.add(group);
-            return this;
-        }
-
-        public Account build() {
-            Account account = new Account(name, startingCash);
-            for (BudgetGroup group : groups) {
-                account.addBudgetGroup(group);
-            }
-            return account;
-        }
     }
 }
