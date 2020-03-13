@@ -1,11 +1,11 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.domain.model;
 
 import com.google.common.collect.Maps;
 
 import java.util.Collection;
 import java.util.Map;
 
-public class Budget implements Aggregatable {
+public class Budget implements DomainModel, Aggregatable {
 
     private final Id id;
     private final Map<Id, Expense> expenses;

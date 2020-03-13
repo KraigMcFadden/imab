@@ -1,6 +1,6 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.domain.model;
 
-public class Expense {
+public class Expense implements DomainModel {
 
     private final Id id;
     private String description;

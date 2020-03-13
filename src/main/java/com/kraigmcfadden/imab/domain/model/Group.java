@@ -1,4 +1,4 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.domain.model;
 
 import com.google.common.collect.Maps;
 
@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-public class Group  implements Aggregatable {
+public class Group  implements DomainModel, Aggregatable {
 
     private final Id id;
     private final Map<Id, Aggregatable> children;

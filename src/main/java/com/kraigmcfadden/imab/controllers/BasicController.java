@@ -2,8 +2,8 @@ package com.kraigmcfadden.imab.controllers;
 
 import com.google.common.collect.Lists;
 import com.kraigmcfadden.imab.controllers.model.*;
-import com.kraigmcfadden.imab.model.*;
-import com.kraigmcfadden.imab.services.PersistenceService;
+import com.kraigmcfadden.imab.domain.model.*;
+import com.kraigmcfadden.imab.domain.repository.AccountRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ public class BasicController {
 
     private static final Log log = LogFactory.getLog(BasicController.class);
 
-    private final PersistenceService persistenceService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public BasicController(PersistenceService persistenceService) {
-        this.persistenceService = persistenceService;
+    public BasicController(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @RequestMapping(path = "/accounts", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<CreateAccountResponse> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
         log.info("Account creation requested");
 
-        Account account = new Account(createAccountRequest.getName(), createAccountRequest.getStartingCash());
+        Account account = Account.create(createAccountRequest.getName(), createAccountRequest.getStartingCash());
         account.addGroup(new Group("My Budgets"));
-        persistenceService.saveAccount(account);
+        accountRepository.save(account);
 
         CreateAccountResponse response = new CreateAccountResponse();
         response.setId(account.getId().getId());
@@ -48,7 +48,7 @@ public class BasicController {
     }
 
     private Optional<Account> getAccount(Id accountId) {
-        return persistenceService.getAccountById(accountId);
+        return accountRepository.lookup(accountId);
     }
 
     // TODO: make group its own resource with its own persistence service

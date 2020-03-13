@@ -1,4 +1,4 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.domain.model;
 
 import com.google.common.collect.Maps;
 
@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-public class Account {
+public class Account implements DomainModel {
 
     private final Id id;
     private final Map<Id, Group> groups;
@@ -15,8 +15,12 @@ public class Account {
     private double limit;
     private double current;
 
-    public Account(String name, double cash) {
-        this.id = new Id();
+    public static Account create(String name, double cash) {
+        return new Account(new Id(), name, cash);
+    }
+
+    public Account(Id id, String name, double cash) {
+        this.id = id;
         this.name = name;
         this.cash = cash;
         this.groups = Maps.newHashMap();

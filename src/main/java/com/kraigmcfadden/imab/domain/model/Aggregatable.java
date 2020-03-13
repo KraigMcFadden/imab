@@ -1,4 +1,4 @@
-package com.kraigmcfadden.imab.model;
+package com.kraigmcfadden.imab.domain.model;
 
 public interface Aggregatable {
 

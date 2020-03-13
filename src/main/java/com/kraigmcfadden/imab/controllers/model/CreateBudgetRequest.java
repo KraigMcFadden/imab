@@ -1,6 +1,6 @@
 package com.kraigmcfadden.imab.controllers.model;
 
-import com.kraigmcfadden.imab.model.Timespan;
+import com.kraigmcfadden.imab.domain.model.Timespan;
 
 public class CreateBudgetRequest {
 
