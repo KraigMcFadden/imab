@@ -1,24 +1,32 @@
 package com.kraigmcfadden.imab.domain.model;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import software.amazon.awssdk.utils.StringUtils;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 
-public class Group  implements DomainModel, Aggregatable {
+public class Group {
 
-    private final Id id;
-    private final Map<Id, Aggregatable> children;
-    private String name;
+    private final String id;
+    private final String name;
+    private final String accountId;
+    private final Set<String> childIds;
+    private final String timeBlockId;
 
-    public Group(String name) {
-        this.id = new Id();
+    private Group(String id,
+                  String name,
+                  String accountId,
+                  Set<String> childIds,
+                  String timeBlockId) {
+        this.id = id;
         this.name = name;
-        this.children = Maps.newHashMap();
+        this.accountId = accountId;
+        this.childIds = childIds;
+        this.timeBlockId = timeBlockId;
     }
 
-    public Id getId() {
+    public String getId() {
         return id;
     }
 
@@ -26,43 +34,69 @@ public class Group  implements DomainModel, Aggregatable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public double getLimit() {
-        double limit = 0.0;
-        for (Aggregatable aggregatable : children.values()) {
-            limit += aggregatable.getLimit();
+    public Set<String> getChildIds() {
+        return childIds;
+    }
+
+    public String getTimeBlockId() {
+        return timeBlockId;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String id;
+        private String name;
+        private String accountId;
+        private Set<String> childIds;
+        private String timeBlockId;
+
+        private Builder() {
+            this.childIds = Sets.newHashSet();
         }
-        return limit;
-    }
 
-    public double getCurrent() {
-        double current = 0.0;
-        for (Aggregatable aggregatable : children.values()) {
-            current += aggregatable.getCurrent();
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
-        return current;
-    }
 
-    public Collection<Aggregatable> getChildren() {
-        return children.values();
-    }
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
 
-    public Optional<Aggregatable> getChild(Id id) {
-        return Optional.ofNullable(children.get(id));
-    }
+        public Builder withAccountId(String accountId) {
+            this.accountId = accountId;
+            return this;
+        }
 
-    public void addChild(Aggregatable aggregatable) {
-        children.put(aggregatable.getId(), aggregatable);
-    }
+        public Builder withChildIds(Collection<String> childIds) {
+            this.childIds.addAll(childIds);
+            return this;
+        }
 
-    public void removeChild(Aggregatable aggregatable) {
-        children.remove(aggregatable.getId());
-    }
+        public Builder withTimeBlockId(String timeBlockId) {
+            this.timeBlockId = timeBlockId;
+            return this;
+        }
 
-    public boolean isOverLimit() {
-        return getCurrent() > getLimit();
+        public Group build() {
+            if (StringUtils.isBlank(id)) {
+                throw new RuntimeException("Can't build account with null id");
+            }
+            if (StringUtils.isBlank(name)) {
+                throw new RuntimeException("Can't build account with null name");
+            }
+            if (StringUtils.isBlank(accountId)) {
+                throw new RuntimeException("Can't build account with null accountId");
+            }
+            return new Group(id, name, accountId, childIds, timeBlockId);
+        }
     }
 }

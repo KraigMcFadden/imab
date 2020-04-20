@@ -1,4 +1,4 @@
-package com.kraigmcfadden.imab.controllers;
+package com.kraigmcfadden.imab.common;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -25,7 +25,7 @@ async function post(url = '', data = {}) {
         },
         body: JSON.stringify(data)
     });
-    return await response.json();
+    return response.headers.get('location');
 }
 
 async function get(url = '') {
