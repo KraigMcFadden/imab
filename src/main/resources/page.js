@@ -1,11 +1,48 @@
-async function createPage(accountId) {
+async function createPage(accountId, timeblockId) {
 
     const summarySection = document.getElementById('summary');
 
     if (accountId) {
         removeAllChildren(summarySection);
+
         const summaryText = document.createTextNode('Account: ' + accountId);
         summarySection.appendChild(summaryText);
+
+        const timeblockMap = await getAllTimeBlocksForAccount(accountId);
+        console.log(JSON.stringify(timeblockMap));
+
+        if (timeblockId) {
+            const selectedTimeblock = timeblockMap[timeblockId];
+            const details = document.getElementById('details');
+            details.appendChild(document.createTextNode(selectedTimeblock.id));
+            details.appendChild(document.createTextNode(selectedTimeblock.startDate));
+            details.appendChild(document.createTextNode(selectedTimeblock.endDate));
+            details.appendChild(document.createTextNode(selectedTimeblock.openingBalance));
+            details.appendChild(document.createTextNode(selectedTimeblock.accountId));
+        }
+
+        // add buttons to select other timeblocks
+        for (const [tbId, timeblock] of Object.entries(timeblockMap)) {
+            const timeblockSelectButton = document.createElement('button');
+            const timeblockSelectButtonText = document.createTextNode(timeblock.startDate + ' - ' + timeblock.endDate);
+            timeblockSelectButton.appendChild(timeblockSelectButtonText);
+
+            timeblockSelectButton.addEventListener('click', () => createPage(accountId, timeblock.id));
+
+            summarySection.appendChild(timeblockSelectButton);
+        }
+
+        // setup the timeblock creation modal
+        const openCreateTimeblockModalButton = document.createElement('button');
+        openCreateTimeblockModalButton.id = 'create-timeblock-open-modal-button';
+        const openCreateTimeblockModalButtonText = document.createTextNode('New Time Block');
+        openCreateTimeblockModalButton.appendChild(openCreateTimeblockModalButtonText);
+
+        summarySection.appendChild(openCreateTimeblockModalButton);
+
+        setupModal('timeblock-create-modal', openCreateTimeblockModalButton.id, 'close-timeblock-create-modal');
+        document.getElementById('create-timeblock-form-submit-button')
+            .addEventListener('click', () => submitCreateTimeblockForm(accountId));
     } else {
         const button = makeCreateAccountButton();
         summarySection.appendChild(button);
@@ -53,7 +90,7 @@ function makeCreateAccountButton() {
     const buttonText = document.createTextNode('Create Account');
     button.appendChild(buttonText);
 
-    document.addEventListener('click', () => createAccount().then((account) => (createPage(account.id))));
+    button.addEventListener('click', () => createAccount().then((account) => (createPage(account.id))));
 
     return button;
 }

@@ -1,5 +1,6 @@
 package com.kraigmcfadden.imab.account;
 
+import com.kraigmcfadden.imab.common.BuilderException;
 import software.amazon.awssdk.utils.StringUtils;
 
 public class Account {
@@ -28,7 +29,7 @@ public class Account {
 
         public Account build() {
             if (StringUtils.isBlank(id)) {
-                throw new RuntimeException("Can't build account with null id");
+                throw new BuilderException("Can't build account with null id");
             }
             return new Account(id);
         }

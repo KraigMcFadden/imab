@@ -29,7 +29,7 @@ public class AccountService {
         this.accountWorker = accountWorker;
     }
 
-    @RequestMapping(path = "/accounts", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/accounts", method = RequestMethod.POST)
     public ResponseEntity<Void> createAccount() {
         log.info("Create account requested");
         try {

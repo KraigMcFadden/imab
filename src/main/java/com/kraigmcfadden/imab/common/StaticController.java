@@ -21,6 +21,15 @@ public class StaticController {
 
     @RequestMapping(path = "/static/js/{fileName}", method = RequestMethod.GET, produces = "text/javascript")
     public ResponseEntity<String> getJavaScriptFile(@PathVariable String fileName) {
+        return getFile(fileName);
+    }
+
+    @RequestMapping(path = "/static/css/{fileName}", method = RequestMethod.GET, produces = "text/css")
+    public ResponseEntity<String> getCssFile(@PathVariable String fileName) {
+        return getFile(fileName);
+    }
+
+    private ResponseEntity<String> getFile(String fileName) {
         log.info(fileName + " requested");
         try {
             Resource resource = new ClassPathResource(fileName);
