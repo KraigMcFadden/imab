@@ -1,4 +1,4 @@
-package com.kraigmcfadden.imab.domain.model;
+package com.kraigmcfadden.imab.expense;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ public class Expense {
     private final Date date;
     private final String accountId;
     private final String envelopeId;
-    private final String timeBlockId;
+    private final String budgetId;
 
     private Expense(String id,
                     String description,
@@ -18,13 +18,41 @@ public class Expense {
                     Date date,
                     String accountId,
                     String envelopeId,
-                    String timeBlockId) {
+                    String budgetId) {
         this.id = id;
         this.description = description;
         this.cost = cost;
         this.date = date;
         this.accountId = accountId;
         this.envelopeId = envelopeId;
-        this.timeBlockId = timeBlockId;
+        this.budgetId = budgetId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getEnvelopeId() {
+        return envelopeId;
+    }
+
+    public String getBudgetId() {
+        return budgetId;
     }
 }

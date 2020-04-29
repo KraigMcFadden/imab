@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+body {
+    background-color: #565554;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    background-color: #2E86AB;
+    border: none;
+    color: white;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 0 1%;
+}
+
+main {
+    width: 100vw;
+}
+
+section {
+    width: 100vw;
+    padding: 1% 0;
+}
+
+#account-section,
+#timeblock-select-section {
+    background-color: #201E1F;
+}

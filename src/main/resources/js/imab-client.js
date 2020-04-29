@@ -21,5 +21,19 @@ async function createTimeBlock(accountId, startDate, endDate, openingBalance) {
 }
 
 async function getAllTimeBlocksForAccount(accountId) {
-    return await get('/accounts/' + accountId + '/timeblocks');
+    const timeblocks = await get('/accounts/' + accountId + '/timeblocks');
+    console.log("Retrieved timeblocks: " + JSON.stringify(timeblocks));
+    return timeblocks;
+}
+
+async function createBudget(openingBalance) {
+    console.log('Creating budget with opening balance: ' + openingBalance);
+    const location = await post('/budgets',
+        {
+            openingBalance: openingBalance
+        }
+    );
+    const budget = await get(location);
+    state.budget = budget;
+    return budget;
 }

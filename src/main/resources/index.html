@@ -5,43 +5,96 @@
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
     <title>IMAB</title>
 
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/form.css">
     <link rel="stylesheet" type="text/css" href="/static/css/modal.css">
 </head>
 <body>
     <!-- Primary Content-->
     <main>
         <section id="summary">
-
+            <div id="summary.cash"></div>
+            <div id="summary.allocated"></div>
+            <div id="summary.consumed"></div>
         </section>
-        <section id="details">
-
-        </section>
+        <section id="breakdown"></section>
     </main>
 
-    <!-- Timeblock create modal -->
-    <div id="timeblock-create-modal" class="modal">
+    <!-- Modals-->
+    <div id="budget-create-modal" class="modal">
         <div class="modal-content">
-            <span class="close" id="close-timeblock-create-modal">&times;</span>
-            <form id="create-timeblock-form" action="javascript:void(0)" autocomplete="off">
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate">
-
-                <label for="endDate">End Date:</label>
-                <input type="date" id="endDate">
-
-                <label for="openingBalance">Opening Balance:</label>
-                <input type="number" id="openingBalance">
-
-                <button id="create-timeblock-form-submit-button">Create Time Block</button>
-            </form>
+            <span class="close" id="close-budget-create-modal">&times;</span>
+            <div class="input-container">
+                <label for="budget-opening-balance">Opening balance ($):</label>
+                <input type="number" id="budget-opening-balance" placeholder="1000"><br>
+            </div>
+            <div class="input-container">
+                <button id="budget-create-submit-button">Create Budget</button>
+            </div>
         </div>
     </div>
 
+    <div id="envelope-create-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-envelope-create-modal">&times;</span>
+            <div class="input-container">
+                <label for="envelope-name">Envelope name:</label>
+                <input type="text" id="envelope-name" placeholder="Groceries"><br>
+            </div>
+            <div class="input-container">
+                <label for="envelope-amount-allocated">Amount allocated ($):</label>
+                <input type="number" id="envelope-amount-allocated" placeholder="250.00"><br>
+            </div>
+            <div class="input-container">
+                <button id="envelope-create-submit-button">Create Envelope</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="expense-create-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-expense-create-modal">&times;</span>
+            <div class="input-container">
+                <label for="expense-description">Expense description:</label>
+                <input type="text" id="expense-description" placeholder="Sandwich at King St. deli"><br>
+            </div>
+            <div class="input-container">
+                <label for="expense-cost">Cost ($):</label>
+                <input type="number" id="expense-cost" placeholder="10.00"><br>
+            </div>
+            <input type="hidden" id="envelope-id">
+            <div class="input-container">
+                <button id="expense-create-submit-button">Create Expense</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/state.js"></script>
+
     <script src="/static/js/rest-template.js"></script>
     <script src="/static/js/imab-client.js"></script>
+
+    <script src="/static/js/common.js"></script>
+
     <script src="/static/js/modal.js"></script>
-    <script src="/static/js/timeblock.js"></script>
-    <script src="/static/js/page.js"></script>
-    <script>createPage();</script>
+
+    <script src="/static/js/summary.js"></script>
+    <script src="/static/js/breakdown.js"></script>
+
+    <script src="/static/js/budget.js"></script>
+    <script src="/static/js/expense.js"></script>
+
+    <script>
+        try {
+            summary.update();
+        } catch (e) {
+            console.error('Failed to update summary section', e);
+        }
+        try {
+            breakdown.update();
+        } catch (e) {
+            console.error('Failed to update breakdown section', e);
+        }
+    </script>
 </body>
 </html>

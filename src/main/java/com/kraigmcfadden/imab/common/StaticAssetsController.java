@@ -15,18 +15,18 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-public class StaticController {
+public class StaticAssetsController {
 
-    private static final Log log = LogFactory.getLog(StaticController.class);
+    private static final Log log = LogFactory.getLog(StaticAssetsController.class);
 
     @RequestMapping(path = "/static/js/{fileName}", method = RequestMethod.GET, produces = "text/javascript")
     public ResponseEntity<String> getJavaScriptFile(@PathVariable String fileName) {
-        return getFile(fileName);
+        return getFile("js/" + fileName);
     }
 
     @RequestMapping(path = "/static/css/{fileName}", method = RequestMethod.GET, produces = "text/css")
     public ResponseEntity<String> getCssFile(@PathVariable String fileName) {
-        return getFile(fileName);
+        return getFile("css/" + fileName);
     }
 
     private ResponseEntity<String> getFile(String fileName) {

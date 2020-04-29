@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+    <title>IMAB</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/form.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/modal.css">
+</head>
+<body>
+    <!-- Primary Content-->
+    <main>
+        <section id="account-section"></section>
+        <section id="timeblock-section">
+            <section id="timeblock-display-section"></section>
+            <section id="timeblock-select-section"></section>
+        </section>
+    </main>
+
+    <!-- Timeblock create modal -->
+    <div id="timeblock-create-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-timeblock-create-modal">&times;</span>
+            <form id="create-timeblock-form" action="javascript:void(0)" autocomplete="off">
+                <div class="input-container">
+                    <label for="startDate">Start Date:</label><br>
+                    <input type="date" id="startDate"><br>
+                </div>
+                <div class="input-container">
+                    <label for="endDate">End Date:</label><br>
+                    <input type="date" id="endDate"><br>
+                </div>
+                <div class="input-container">
+                    <label for="openingBalance">Opening Balance:</label><br>
+                    <input type="number" id="openingBalance"><br>
+                </div>
+                <div class="input-container">
+                    <button id="create-timeblock-form-submit-button">Create Time Block</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/rest-template.js"></script>
+    <script src="/static/js/imab-client.js"></script>
+    <script src="/static/js/modal.js"></script>
+    <script src="/static/js/create-timeblock-modal.js"></script>
+    <script src="/static/js/page.js"></script>
+    <script>createPage();</script>
+</body>
+</html>
