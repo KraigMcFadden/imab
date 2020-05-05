@@ -1,39 +1,69 @@
-async function createAccount() {
-    const location = await post('/accounts');
-    return await get(location);
-}
+const imabClient = (() => {
 
-async function getAccount(accountId) {
-    return await get('/accounts/' + accountId);
-}
+    const createAccount = async function () {
+        const location = await restTemplate.post('/accounts');
+        return await restTemplate.get(location);
+    };
 
-async function createTimeBlock(accountId, startDate, endDate, openingBalance) {
-    console.log('Creating time block with args: ' + accountId + ', ' + startDate + ', ' + endDate + ', ' + openingBalance);
-    const location = await post(
-        '/accounts/' + accountId + '/timeblocks',
-        {
-            startDate: startDate,
-            endDate: endDate,
-            openingBalance: openingBalance
-        }
-    );
-    return await get(location);
-}
+    const getAccount = async function (accountId) {
+        return await restTemplate.get('/accounts/' + accountId);
+    };
 
-async function getAllTimeBlocksForAccount(accountId) {
-    const timeblocks = await get('/accounts/' + accountId + '/timeblocks');
-    console.log("Retrieved timeblocks: " + JSON.stringify(timeblocks));
-    return timeblocks;
-}
+    const createTimeBlock = async function (accountId, startDate, endDate, openingBalance) {
+        console.log('Creating time block with args: ' + accountId + ', ' + startDate + ', ' + endDate + ', ' + openingBalance);
+        const location = await restTemplate.post(
+            '/accounts/' + accountId + '/timeblocks',
+            {
+                startDate: startDate,
+                endDate: endDate,
+                openingBalance: openingBalance
+            }
+        );
+        return await restTemplate.get(location);
+    };
 
-async function createBudget(openingBalance) {
-    console.log('Creating budget with opening balance: ' + openingBalance);
-    const location = await post('/budgets',
-        {
-            openingBalance: openingBalance
-        }
-    );
-    const budget = await get(location);
-    state.budget = budget;
-    return budget;
-}
+    const getAllTimeBlocksForAccount = async function (accountId) {
+        const timeblocks = await restTemplate.get('/accounts/' + accountId + '/timeblocks');
+        console.log("Retrieved timeblocks: " + JSON.stringify(timeblocks));
+        return timeblocks;
+    };
+
+    const createBudget = async function (openingBalance) {
+        console.log('Creating budget with opening balance: ' + openingBalance);
+        const location = await restTemplate.post('/budgets',
+            {
+                openingBalance: openingBalance
+            }
+        );
+        return await restTemplate.get(location);
+    };
+
+    const createEnvelope = async function (name, allocated, budgetId) {
+        console.log('Creating envelope with name: ' + name + ', allocated: ' + allocated + ', and budget id: ' + budgetId);
+        const location = await restTemplate.post('/envelopes',
+            {
+                name: name,
+                allocated: allocated,
+                budgetId: budgetId
+            }
+        );
+        return await restTemplate.get(location);
+    };
+
+    const createExpense = async function (description, cost) {
+        console.log('Creating expense with description: ' + description + ' and cost: ' + cost);
+        const location = await restTemplate.post('/expenses',
+            {
+                description: description,
+                cost: cost
+            }
+        );
+        return await restTemplate.get(location);
+    };
+
+    return {
+        createBudget: createBudget,
+        createEnvelope: createEnvelope,
+        createExpense: createExpense
+    }
+})();

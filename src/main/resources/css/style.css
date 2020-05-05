@@ -24,11 +24,12 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 1em;
-    margin: 0 1%;
+    margin-right: 1%;
 }
 
 main {
     width: 100vw;
+    padding-left: 1%;
 }
 
 section {

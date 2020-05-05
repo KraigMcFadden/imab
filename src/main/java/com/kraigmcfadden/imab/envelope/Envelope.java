@@ -47,7 +47,7 @@ public class Envelope {
     public static class Builder {
         private String id;
         private String name;
-        private double allocatedMoney;
+        private double allocated;
         private String accountId;
         private String budgetId;
 
@@ -61,8 +61,8 @@ public class Envelope {
             return this;
         }
 
-        public Builder withAllocatedMoney(double allocatedMoney) {
-            this.allocatedMoney = allocatedMoney;
+        public Builder withAllocated(double allocated) {
+            this.allocated = allocated;
             return this;
         }
 
@@ -77,7 +77,7 @@ public class Envelope {
         }
 
         public Envelope build() {
-            return new Envelope(id, name, allocatedMoney, accountId, budgetId);
+            return new Envelope(id, name, allocated, accountId, budgetId);
         }
     }
 }

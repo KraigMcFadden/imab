@@ -17,25 +17,33 @@
 //     return await response.json(); // parses JSON response into native JavaScript objects
 // }
 
-async function post(url = '', data = {}) {
-    const body = JSON.stringify(data);
-    console.log('POSTing with body: ' + body);
+const restTemplate = (() => {
 
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: body
-    });
-    return response.headers.get('location');
-}
+    const post = async function (url = '', data = {}) {
+        const body = JSON.stringify(data);
+        console.log('POSTing with body: ' + body);
 
-async function get(url = '') {
-    const response = await fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        },
-    });
-    return await response.json();
-}
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        });
+        return response.headers.get('location');
+    }
+
+    const get = async function (url = '') {
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json'
+            },
+        });
+        return await response.json();
+    }
+
+    return {
+        get: get,
+        post: post
+    }
+})();

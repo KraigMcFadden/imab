@@ -1,13 +1,13 @@
-const modals = {
-    budgetCreateModal: {
+const Modals = {
+    BUDGET_CREATE: {
         id: 'budget-create-modal',
         closeSpanId: 'close-budget-create-modal'
     },
-    envelopeCreateModal: {
+    ENVELOPE_CREATE: {
         id: 'envelope-create-modal',
         closeSpanId: 'close-envelope-create-modal'
     },
-    expenseCreateModal: {
+    EXPENSE_CREATE: {
         id: 'expense-create-modal',
         closeSpanId: 'close-expense-create-modal'
     }
@@ -45,6 +45,6 @@ function closeModal(modalEnum) {
     modal.style.display = "none";
 }
 
-setupModal(modals.budgetCreateModal);
-setupModal(modals.envelopeCreateModal);
-setupModal(modals.expenseCreateModal);
+setupModal(Modals.BUDGET_CREATE);
+setupModal(Modals.ENVELOPE_CREATE);
+setupModal(Modals.EXPENSE_CREATE);

@@ -6,3 +6,7 @@ function newButton(buttonId, buttonText, parentElement) {
     parentElement.appendChild(button);
     return button;
 }
+
+function setHiddenInput(inputId, inputValue) {
+    document.getElementById(inputId).value = inputValue;
+}

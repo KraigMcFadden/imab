@@ -39,14 +39,14 @@ const breakdown = (() => {
 
         const budget = getBudget();
 
+        /*
+        <button>Create Budget</button>
+         */
         if (!budget) {
             const addBudgetButton = newButton('add-budget-button', 'Create Budget', section);
-            registerOpenButtonForModal(modals.budgetCreateModal, addBudgetButton.id);
+            registerOpenButtonForModal(Modals.BUDGET_CREATE, addBudgetButton.id);
             return;
         }
-
-        const envelopes = getEnvelopesForBudget(budget);
-        const expenses = getExpensesForEnvelopes(envelopes);
 
         /*
         <div id="envelope-...">
@@ -58,6 +58,8 @@ const breakdown = (() => {
         </div>
         <button>Add Envelope</button>
          */
+        const envelopes = getEnvelopesForBudget(budget);
+        const expenses = getExpensesForEnvelopes(envelopes);
         for (const envelope of envelopes) {
             const envelopeDiv = document.createElement('div');
             envelopeDiv.id = 'envelope-' + envelope.id;
@@ -76,19 +78,18 @@ const breakdown = (() => {
                 envelopeDiv.appendChild(expenseDiv);
             }
 
-            const addExpenseButton = document.createElement('button');
-            addExpenseButton.id = envelopeDiv.id + '-add-expense-button';
-            registerOpenButtonForModal(modals.expenseCreateModal, addExpenseButton.id);
+            const addExpenseButton = newButton(envelopeDiv.id + '-add-expense-button', 'Add Expense', envelopeDiv);
+            registerOpenButtonForModal(Modals.EXPENSE_CREATE, addExpenseButton.id);
             addExpenseButton.addEventListener('click', () => {
-                setHiddenInput(envelope.id);
+                setHiddenInput('envelope-id', envelope.id);
             });
         }
 
-        const addEnvelopeButton = document.createElement('button');
-        addEnvelopeButton.id = 'add-envelope-button';
-        section.appendChild(addEnvelopeButton);
-
-        registerOpenButtonForModal(modals.envelopeCreateModal, addEnvelopeButton.id);
+        const addEnvelopeButton = newButton('add-envelope-button', 'Add Envelope', section);
+        registerOpenButtonForModal(Modals.ENVELOPE_CREATE, addEnvelopeButton.id);
+        addEnvelopeButton.addEventListener('click', () => {
+            setHiddenInput('budget-id', budget.id);
+        });
     };
 
     const clearAllChildren = () => {
