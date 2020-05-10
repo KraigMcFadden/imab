@@ -49,9 +49,9 @@ const breakdown = (() => {
         }
 
         /*
-        <div id="envelope-...">
+        <div id="envelope-..." class="envelope">
             envelope name
-            <div id="expense-...">
+            <div id="expense-..." class="expense">
                 expense description - $...
             </div>
             <button>Add Expense</button>
@@ -63,10 +63,9 @@ const breakdown = (() => {
         for (const envelope of envelopes) {
             const envelopeDiv = document.createElement('div');
             envelopeDiv.id = 'envelope-' + envelope.id;
-            section.appendChild(envelopeDiv);
-
-            const envelopeDivName = document.createTextNode(envelope.name);
+            const envelopeDivName = document.createTextNode('Envelope: ' + envelope.name + ' - $' + envelope.allocated);
             envelopeDiv.appendChild(envelopeDivName);
+            section.appendChild(envelopeDiv);
 
             for (const expense of expenses[envelope.id]) {
                 const expenseDiv = document.createElement('div');
@@ -81,14 +80,15 @@ const breakdown = (() => {
             const addExpenseButton = newButton(envelopeDiv.id + '-add-expense-button', 'Add Expense', envelopeDiv);
             registerOpenButtonForModal(Modals.EXPENSE_CREATE, addExpenseButton.id);
             addExpenseButton.addEventListener('click', () => {
-                setHiddenInput('envelope-id', envelope.id);
+                setHiddenInput('expense-envelope-id', envelope.id);
+                setHiddenInput('expense-budget-id', envelope.id);
             });
         }
 
         const addEnvelopeButton = newButton('add-envelope-button', 'Add Envelope', section);
         registerOpenButtonForModal(Modals.ENVELOPE_CREATE, addEnvelopeButton.id);
         addEnvelopeButton.addEventListener('click', () => {
-            setHiddenInput('budget-id', budget.id);
+            setHiddenInput('envelope-budget-id', budget.id);
         });
     };
 

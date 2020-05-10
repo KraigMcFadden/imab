@@ -6,6 +6,8 @@ import com.kraigmcfadden.imab.budget.BudgetRepository;
 import com.kraigmcfadden.imab.budget.InMemoryBudgetRepository;
 import com.kraigmcfadden.imab.envelope.EnvelopeRepository;
 import com.kraigmcfadden.imab.envelope.InMemoryEnvelopeRepository;
+import com.kraigmcfadden.imab.expense.ExpenseRepository;
+import com.kraigmcfadden.imab.expense.InMemoryExpenseRepository;
 import com.kraigmcfadden.imab.timeblock.InMemoryTimeBlockRepository;
 import com.kraigmcfadden.imab.timeblock.TimeBlockRepository;
 import org.apache.commons.logging.Log;
@@ -42,5 +44,11 @@ public class LocalConfiguration {
     public EnvelopeRepository inMemoryEnvelopeRepository() {
         log.info("Creating in-memory EnvelopeRepository");
         return new InMemoryEnvelopeRepository();
+    }
+
+    @Bean
+    public ExpenseRepository inMemoryExpenseRepository() {
+        log.info("Creating in-memory ExpenseRepository");
+        return new InMemoryExpenseRepository();
     }
 }

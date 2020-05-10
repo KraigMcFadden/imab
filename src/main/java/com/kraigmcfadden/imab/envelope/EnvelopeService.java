@@ -39,10 +39,10 @@ public class EnvelopeService {
             Envelope envelope = envelopeWorker.create(request.getName(), request.getAllocated(), request.getBudgetId());
             return ResponseEntity.created(URI.create(RESOURCE + "/" + envelope.getId())).build();
         } catch (ValidationException e) {
-            log.error("Invalid budget creation request", e);
+            log.error("Invalid envelope creation request", e);
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            log.error("Could not create budget", e);
+            log.error("Could not create envelope", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

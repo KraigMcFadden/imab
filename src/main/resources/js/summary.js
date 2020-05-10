@@ -16,7 +16,7 @@ const summary = (() => {
             allocated += envelope.allocated;
         }
         document.getElementById(allocatedId).innerHTML = 'Allocated: $ ' + allocated + ' / ' + available
-            + ' (' + (100 * allocated / available) + '%)';
+            + ' (' + Math.round(100 * allocated / available) + '%)';
     };
 
     const updateConsumed = () => {
@@ -26,7 +26,7 @@ const summary = (() => {
             totalExpense += expense.cost;
         }
         document.getElementById(consumedId).innerHTML = 'Consumed: $ ' + totalExpense + ' / ' + available
-            + ' (' + (100 * totalExpense / available) + '%)';
+            + ' (' + Math.round(100 * totalExpense / available) + '%)';
     };
 
     const update = () => {
