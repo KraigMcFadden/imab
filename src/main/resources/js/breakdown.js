@@ -1,6 +1,6 @@
 const breakdown = (() => {
 
-    const sectionId = 'breakdown';
+    const SECTION_ID = 'breakdown';
 
     const load = () => {
 
@@ -35,7 +35,7 @@ const breakdown = (() => {
     };
 
     const createHtml = () => {
-        const section = document.getElementById(sectionId);
+        const section = document.getElementById(SECTION_ID);
 
         const budget = getBudget();
 
@@ -61,23 +61,34 @@ const breakdown = (() => {
         const envelopes = getEnvelopesForBudget(budget);
         const expenses = getExpensesForEnvelopes(envelopes);
         for (const envelope of envelopes) {
-            const envelopeDiv = document.createElement('div');
-            envelopeDiv.id = 'envelope-' + envelope.id;
-            const envelopeDivName = document.createTextNode('Envelope: ' + envelope.name + ' - $' + envelope.allocated);
-            envelopeDiv.appendChild(envelopeDivName);
-            section.appendChild(envelopeDiv);
+            const envelopeDiv = createElement(section, 'div', {
+                id: 'envelope-' + envelope.id,
+                className: 'envelope',
+            });
+            const envelopeHeader = createElement(envelopeDiv, 'div', {
+                className: 'envelope-header',
+                text: envelope.name + ' - ' + toMoneyStr(envelope.allocated)
+            });
+            const envelopeContent = createElement(envelopeDiv, 'div', {
+                className: 'envelope-content'
+            });
 
             for (const expense of expenses[envelope.id]) {
-                const expenseDiv = document.createElement('div');
-                expenseDiv.id = 'expense-' + expense.id;
-
-                const expenseDivDetail = document.createTextNode(expense.description + ' - $' + expense.cost);
-                expenseDiv.appendChild(expenseDivDetail);
-
-                envelopeDiv.appendChild(expenseDiv);
+                const expenseDiv = createElement(envelopeContent, 'div', {
+                    id: 'expense-' + expense.id,
+                    className: 'expense'
+                });
+                const expenseHeader = createElement(expenseDiv, 'div', {
+                    className: 'expense-header',
+                    text: toMoneyStr(expense.cost)
+                });
+                const expenseContent = createElement(expenseDiv, 'div', {
+                    className: 'expense-content',
+                    text: expense.description
+                });
             }
 
-            const addExpenseButton = newButton(envelopeDiv.id + '-add-expense-button', 'Add Expense', envelopeDiv);
+            const addExpenseButton = newButton(envelopeDiv.id + '-add-expense-button', 'Add Expense', envelopeContent);
             registerOpenButtonForModal(Modals.EXPENSE_CREATE, addExpenseButton.id);
             addExpenseButton.addEventListener('click', () => {
                 setHiddenInput('expense-envelope-id', envelope.id);
@@ -92,15 +103,8 @@ const breakdown = (() => {
         });
     };
 
-    const clearAllChildren = () => {
-        const section = document.getElementById(sectionId);
-        while (section.firstChild) {
-            section.removeChild(section.firstChild);
-        }
-    };
-
     const update = () => {
-        clearAllChildren();
+        clearAllChildElements(SECTION_ID);
         createHtml();
     };
 

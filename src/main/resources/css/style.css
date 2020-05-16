@@ -1,29 +1,25 @@
 * {
     box-sizing: border-box;
-    color: white;
+    color: black;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
     line-height: 1.5;
 }
 
 body {
-    background-color: #565554;
+    background-color: #fff8e7;
     margin: 0;
 }
 
-.hidden {
-    display: none;
-}
-
 button {
-    background-color: #2E86AB;
-    border: none;
+    background-color: darkgreen;
     color: white;
-    padding: 1% 2%;
+    padding: 0.5% 1%;
     text-align: center;
     text-decoration: none;
     display: block;
     font-size: 1em;
+    font-weight: bold;
     margin-right: 1%;
 }
 
@@ -37,7 +33,53 @@ section {
     padding: 1% 0;
 }
 
+.hidden {
+    display: none;
+}
+
+.summary-line-item {
+    border-right: 2px black solid;
+    display: inline-block;
+    margin-right: 1%;
+    padding-right: 1%;
+}
+
+.summary-header {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.summary-content {
+    font-size: 2em;
+}
+
 #account-section,
 #timeblock-select-section {
     background-color: #201E1F;
+}
+
+.envelope {
+    border: 1px black solid;
+    width: 50%;
+}
+
+.envelope-header {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.envelope-content {
+    padding-left: 5%;
+}
+
+.expense {
+    border: 1px black solid
+}
+
+.expense-header {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.expense-content {
 }

@@ -50,6 +50,11 @@ const imabClient = (() => {
         return await restTemplate.get(location);
     };
 
+    const updateEnvelope = async function (name, allocated, budgetId) {
+        console.log('Updating envelope with name: ' + name + ', allocated: ' + allocated + ' and budget id: ' + budgetId);
+
+    }
+
     const createExpense = async function (description, cost, date, envelopeId, budgetId) {
         console.log('Creating expense with description: ' + description + ', cost: ' + cost + ', date: ' + date + ', envelopeId: ' + envelopeId + ', budgetId: ' + budgetId);
         const location = await restTemplate.post('/expenses',

@@ -31,7 +31,7 @@ const restTemplate = (() => {
             body: body
         });
         return response.headers.get('location');
-    }
+    };
 
     const get = async function (url = '') {
         const response = await fetch(url, {
@@ -40,10 +40,25 @@ const restTemplate = (() => {
             },
         });
         return await response.json();
+    };
+
+    const put = async function (url = '', data = {}) {
+        const body = JSON.stringify(data);
+        console.log('PUTting with body: ' + body);
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        });
+        return response.json();
     }
 
     return {
         get: get,
-        post: post
+        post: post,
+        put: put
     }
 })();
