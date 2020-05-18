@@ -7,9 +7,17 @@ const Modals = {
         id: 'envelope-create-modal',
         closeSpanId: 'close-envelope-create-modal'
     },
+    ENVELOPE_UPDATE: {
+        id: 'envelope-update-modal',
+        closeSpanId: 'close-envelope-update-modal'
+    },
     EXPENSE_CREATE: {
         id: 'expense-create-modal',
         closeSpanId: 'close-expense-create-modal'
+    },
+    EXPENSE_UPDATE: {
+        id: 'expense-update-modal',
+        closeSpanId: 'close-expense-update-modal'
     }
 };
 
@@ -48,3 +56,5 @@ function closeModal(modalEnum) {
 setupModal(Modals.BUDGET_CREATE);
 setupModal(Modals.ENVELOPE_CREATE);
 setupModal(Modals.EXPENSE_CREATE);
+setupModal(Modals.ENVELOPE_UPDATE);
+setupModal(Modals.EXPENSE_UPDATE);

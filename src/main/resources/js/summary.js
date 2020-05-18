@@ -38,7 +38,7 @@ const summary = (() => {
         createLineItem(
             SECTION_ID + '.allocated',
             'Allocated:',
-            toMoneyStr(allocated) + ' / ' + toMoneyStr(available) + ' (' + Math.round(100 * allocated / available) + '%)'
+            toMoneyStr(allocated) + ' (' + Math.round(100 * allocated / available) + '%)'
         );
     };
 
@@ -51,7 +51,7 @@ const summary = (() => {
         createLineItem(
             SECTION_ID + '.consumed',
             'Consumed ($):',
-            toMoneyStr(totalExpense) + ' / ' + toMoneyStr(available) + ' (' + Math.round(100 * totalExpense / available) + '%)'
+            toMoneyStr(totalExpense) + ' (' + Math.round(100 * totalExpense / available) + '%)'
         );
     };
 

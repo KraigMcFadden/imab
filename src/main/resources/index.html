@@ -35,16 +35,34 @@
         <div class="modal-content">
             <span class="close" id="close-envelope-create-modal">&times;</span>
             <div class="input-container">
-                <label for="envelope-name">Envelope name:</label>
-                <input type="text" id="envelope-name" placeholder="Groceries"><br>
+                <label for="envelope-create-name">Envelope name:</label>
+                <input type="text" id="envelope-create-name" placeholder="Groceries"><br>
             </div>
             <div class="input-container">
-                <label for="envelope-amount-allocated">Amount allocated ($):</label>
-                <input type="number" id="envelope-amount-allocated" placeholder="250.00"><br>
+                <label for="envelope-create-allocated">Amount allocated ($):</label>
+                <input type="number" id="envelope-create-allocated" placeholder="250.00"><br>
             </div>
-            <input type="hidden" id="envelope-budget-id">
+            <input type="hidden" id="envelope-create-budget-id">
             <div class="input-container">
                 <button id="envelope-create-submit-button">Create Envelope</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="envelope-update-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-envelope-update-modal">&times;</span>
+            <div class="input-container">
+                <label for="envelope-update-name">Envelope name:</label>
+                <input type="text" id="envelope-update-name" placeholder="Groceries"><br>
+            </div>
+            <div class="input-container">
+                <label for="envelope-update-allocated">Amount allocated ($):</label>
+                <input type="number" id="envelope-update-allocated" placeholder="250.00"><br>
+            </div>
+            <input type="hidden" id="envelope-update-id">
+            <div class="input-container">
+                <button id="envelope-update-submit-button">Update Envelope</button>
             </div>
         </div>
     </div>
@@ -53,21 +71,44 @@
         <div class="modal-content">
             <span class="close" id="close-expense-create-modal">&times;</span>
             <div class="input-container">
-                <label for="expense-description">Expense description:</label>
-                <input type="text" id="expense-description" placeholder="Sandwich at King St. deli"><br>
+                <label for="expense-create-description">Expense description:</label>
+                <input type="text" id="expense-create-description" placeholder="Sandwich at King St. deli"><br>
             </div>
             <div class="input-container">
-                <label for="expense-cost">Cost ($):</label>
-                <input type="number" id="expense-cost" placeholder="10.00"><br>
+                <label for="expense-create-cost">Cost ($):</label>
+                <input type="number" id="expense-create-cost" placeholder="10.00"><br>
             </div>
             <div class="input-container">
-                <label for="expense-date">Cost ($):</label>
-                <input type="date" id="expense-date" placeholder="01/01/2020"><br>
+                <label for="expense-create-date">Cost ($):</label>
+                <input type="date" id="expense-create-date" placeholder="01/01/2020"><br>
             </div>
-            <input type="hidden" id="expense-envelope-id">
-            <input type="hidden" id="expense-budget-id">
+            <input type="hidden" id="expense-create-envelope-id">
+            <input type="hidden" id="expense-create-budget-id">
             <div class="input-container">
                 <button id="expense-create-submit-button">Create Expense</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="expense-update-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-expense-update-modal">&times;</span>
+            <div class="input-container">
+                <label for="expense-update-description">Expense description:</label>
+                <input type="text" id="expense-update-description" placeholder="Sandwich at King St. deli"><br>
+            </div>
+            <div class="input-container">
+                <label for="expense-update-cost">Cost ($):</label>
+                <input type="number" id="expense-update-cost" placeholder="10.00"><br>
+            </div>
+            <div class="input-container">
+                <label for="expense-update-date">Cost ($):</label>
+                <input type="date" id="expense-update-date" placeholder="01/01/2020"><br>
+            </div>
+            <input type="hidden" id="expense-update-envelope-id">
+            <input type="hidden" id="expense-update-id">
+            <div class="input-container">
+                <button id="expense-update-submit-button">Update Expense</button>
             </div>
         </div>
     </div>

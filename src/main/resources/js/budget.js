@@ -7,4 +7,5 @@ document.getElementById('budget-create-submit-button')
             breakdown.update();
         });
         closeModal(Modals.BUDGET_CREATE);
+        openingBalance.value = null;
     });

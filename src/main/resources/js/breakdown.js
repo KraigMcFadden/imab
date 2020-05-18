@@ -1,6 +1,8 @@
 const breakdown = (() => {
 
     const SECTION_ID = 'breakdown';
+    const ENVELOPE_COOLORS = ['#D62839', '#004BA8', '#00916E', '#3F88C5', '#E28413'];
+    const BUTTON_COOLORS = ['#5A0406', '#00085A', '#00250B', '#061547', '#4E0D02'];
 
     const load = () => {
 
@@ -58,6 +60,7 @@ const breakdown = (() => {
         </div>
         <button>Add Envelope</button>
          */
+        let coolorsIndex = 0;
         const envelopes = getEnvelopesForBudget(budget);
         const expenses = getExpensesForEnvelopes(envelopes);
         for (const envelope of envelopes) {
@@ -65,6 +68,7 @@ const breakdown = (() => {
                 id: 'envelope-' + envelope.id,
                 className: 'envelope',
             });
+            registerOpenButtonForModal(Modals.ENVELOPE_UPDATE, envelopeDiv.id);
             const envelopeHeader = createElement(envelopeDiv, 'div', {
                 className: 'envelope-header',
                 text: envelope.name + ' - ' + toMoneyStr(envelope.allocated)
@@ -78,6 +82,7 @@ const breakdown = (() => {
                     id: 'expense-' + expense.id,
                     className: 'expense'
                 });
+                registerOpenButtonForModal(Modals.EXPENSE_UPDATE, expenseDiv.id);
                 const expenseHeader = createElement(expenseDiv, 'div', {
                     className: 'expense-header',
                     text: toMoneyStr(expense.cost)
@@ -91,15 +96,23 @@ const breakdown = (() => {
             const addExpenseButton = newButton(envelopeDiv.id + '-add-expense-button', 'Add Expense', envelopeContent);
             registerOpenButtonForModal(Modals.EXPENSE_CREATE, addExpenseButton.id);
             addExpenseButton.addEventListener('click', () => {
-                setHiddenInput('expense-envelope-id', envelope.id);
-                setHiddenInput('expense-budget-id', envelope.id);
+                setHiddenInput('expense-create-envelope-id', envelope.id);
+                setHiddenInput('expense-create-budget-id', envelope.id);
             });
+
+            // set the envelope color
+            envelopeDiv.style.color = 'white';
+            envelopeDiv.style.backgroundColor = ENVELOPE_COOLORS[coolorsIndex];
+            addExpenseButton.style.backgroundColor = BUTTON_COOLORS[coolorsIndex++];
+            if (coolorsIndex >= ENVELOPE_COOLORS.length) {
+                coolorsIndex = 0;
+            }
         }
 
         const addEnvelopeButton = newButton('add-envelope-button', 'Add Envelope', section);
         registerOpenButtonForModal(Modals.ENVELOPE_CREATE, addEnvelopeButton.id);
         addEnvelopeButton.addEventListener('click', () => {
-            setHiddenInput('envelope-budget-id', budget.id);
+            setHiddenInput('envelope-create-budget-id', budget.id);
         });
     };
 
