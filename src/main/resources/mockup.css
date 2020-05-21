@@ -1,0 +1,86 @@
+* {
+
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: black;
+
+}
+
+h1 {
+    font-size: 3rem;
+    background-color: transparent;
+
+}
+h2 {
+    font-size: 2rem;
+    background-color: transparent;
+
+}
+h3 {
+    font-size: 1.5rem;
+    background-color: transparent;
+}
+
+h4 {
+    background-color: transparent;
+}
+
+.contents {
+    width: 60%;
+    position: relative;
+    margin: auto;
+    /*border-right: 1px solid #555555;*/
+    /*border-left: 1px solid #555555;*/
+    padding: 1rem;
+}
+
+.summary {
+    border-bottom: 1px solid #555555;
+    margin-bottom: 1rem;
+}
+
+.envelope {
+    padding: 1rem 1rem 1rem 1rem;
+    margin-bottom: .5rem;
+    border-left: 4px solid midnightblue;
+}
+
+.envelope:hover {
+
+    background-color: midnightblue;
+
+}
+
+.expense {
+    display: none;
+    background-color: transparent;
+    margin-left: 1rem;
+    overflow: auto;
+}
+
+button.round {
+    border-radius: 100%;
+    border: none;
+    text-align: center;
+}
+
+#addEnvelopeButton {
+    background-color: midnightblue;
+    color: white;
+    width: 4rem;
+    height: 4rem;
+    margin: 2rem 0 2rem 0;
+    float: right;
+    font-size: 2rem;
+}
+
+#addExpenseButton {
+    background-color: black;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    margin-top: 2rem;
+    float: right;
+    font-size: 1rem;
+
+}

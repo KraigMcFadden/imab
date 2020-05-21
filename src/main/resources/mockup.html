@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mockup</title>
+
+    <link rel="stylesheet" type="text/css" href="mockup.css">
+
+</head>
+<body>
+
+<div class="contents">
+    <div class="summary">
+        <span><h2>Cash:</h2></span>
+        <span><h1>$2500.00</h1></span>
+
+    </div>
+
+    <div class="envelope" id="env1" onclick="showExpense('env1', 'ex1')">
+        <h3> Gifts $100 </h3>
+        <div class="expense" id="ex1">
+            <h4> Grafton's gift $20</h4>
+            <h4> Kraig's gift $20</h4>
+            <h4> Ella's gift $20</h4>
+            <button class="round" id="addExpenseButton">+</button>
+        </div>
+
+    </div>
+
+    <div class="envelope">
+        <h3> Tithe $100 </h3>
+
+    </div>
+
+    <button class="round" id="addEnvelopeButton">+</button>
+
+</div>
+
+<script>
+
+    function showExpense(envelopeId, expenseId) {
+
+        document.getElementById(envelopeId).style.backgroundColor = "midnightblue";
+        document.getElementById(expenseId).style.display = "block";
+
+    }
+
+</script>
+
+</body>
+</html>
