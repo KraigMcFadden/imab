@@ -70,6 +70,8 @@ public class EnvelopeService {
                                                    @RequestBody UpdateEnvelopeRequest request) {
         try {
             log.info("Update envelope " + envelopeId + " requested with request " + new ObjectMapper().writeValueAsString(request));
+            Envelope envelope = envelopeWorker.get(envelopeId);
+            return ResponseEntity.ok(envelope);
         } catch (ValidationException e) {
             log.error("Invalid input envelope id " + envelopeId, e);
             return ResponseEntity.badRequest().build();
