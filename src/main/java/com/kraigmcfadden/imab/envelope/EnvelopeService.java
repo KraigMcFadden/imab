@@ -64,4 +64,21 @@ public class EnvelopeService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @RequestMapping(path = RESOURCE + "/{envelopeId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Envelope> updateEnvelope(@PathVariable String envelopeId,
+                                                   @RequestBody UpdateEnvelopeRequest request) {
+        try {
+            log.info("Update envelope " + envelopeId + " requested with request " + new ObjectMapper().writeValueAsString(request));
+        } catch (ValidationException e) {
+            log.error("Invalid input envelope id " + envelopeId, e);
+            return ResponseEntity.badRequest().build();
+        } catch (NotFoundException e) {
+            log.error("Envelope id not found in our database " + envelopeId, e);
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Could not update envelope " + envelopeId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
