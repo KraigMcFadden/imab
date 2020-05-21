@@ -1,5 +1,4 @@
-* {
-
+body {
     color: white;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: black;
@@ -8,25 +7,20 @@
 
 h1 {
     font-size: 3rem;
-    background-color: transparent;
-
 }
 h2 {
     font-size: 2rem;
-    background-color: transparent;
 
 }
 h3 {
     font-size: 1.5rem;
-    background-color: transparent;
 }
 
 h4 {
-    background-color: transparent;
 }
 
 .contents {
-    width: 60%;
+    width: 583px;
     position: relative;
     margin: auto;
     /*border-right: 1px solid #555555;*/
@@ -46,16 +40,22 @@ h4 {
 }
 
 .envelope:hover {
-
     background-color: midnightblue;
-
 }
 
 .expense {
     display: none;
-    background-color: transparent;
     margin-left: 1rem;
     overflow: auto;
+}
+
+.single-expense {
+    padding-bottom: 3px;
+    border-bottom: 1px solid #5d61af;
+}
+
+.monetary {
+    float: right;
 }
 
 button.round {
@@ -82,5 +82,27 @@ button.round {
     margin-top: 2rem;
     float: right;
     font-size: 1rem;
+
+}
+
+
+/* Phone style */
+@media screen and (max-width: 414px) {
+    .contents {
+        width: 100%;
+    }
+}
+
+
+@media screen and (min-width: 415px) and (max-width: 768px) {
+
+    .contents {
+        width: 70%;
+    }
+}
+
+/* Computer style, above iPad portrait mode width */
+@media screen and (min-width:769px) {
+
 
 }
