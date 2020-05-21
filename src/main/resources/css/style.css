@@ -66,6 +66,7 @@ section {
 
 .envelope {
     background-color: white;
+    color: white;
     border-bottom: 1px gray solid;
     width: 50%;
     padding: 1%;
@@ -78,14 +79,17 @@ section {
 .envelope-header {
     font-size: 1.5em;
     font-weight: bold;
+    color: white;
 }
 
 .envelope-content {
     padding-left: 5%;
+    color: white;
 }
 
 .expense {
-    border-bottom: 1px gray solid
+    border-bottom: 1px gray solid;
+    color: white;
 }
 
 .expense:hover {
@@ -95,7 +99,9 @@ section {
 .expense-header {
     font-size: 1.5em;
     font-weight: bold;
+    color: white;
 }
 
 .expense-content {
+    color: white;
 }

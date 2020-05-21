@@ -76,6 +76,15 @@ public class Envelope {
             return this;
         }
 
+        public Builder from(Envelope envelope) {
+            this.id = envelope.getId();
+            this.name = envelope.getName();
+            this.allocated = envelope.getAllocated();
+            this.budgetId = envelope.getBudgetId();
+            this.accountId = envelope.getAccountId();
+            return this;
+        }
+
         public Envelope build() {
             return new Envelope(id, name, allocated, accountId, budgetId);
         }

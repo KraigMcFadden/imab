@@ -32,7 +32,7 @@ document.getElementById('envelope-update-submit-button')
                     summary.update();
                     breakdown.update();
                 });
-            closeModal(Modals.ENVELOPE_CREATE);
+            closeModal(Modals.ENVELOPE_UPDATE);
             name.value = null;
             allocated.value = null;
             id.value = null;
