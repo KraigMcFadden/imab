@@ -68,7 +68,12 @@ const breakdown = (() => {
                 id: 'envelope-' + envelope.id,
                 className: 'envelope',
             });
+
             registerOpenButtonForModal(Modals.ENVELOPE_UPDATE, envelopeDiv.id);
+            envelopeDiv.addEventListener('click', () => {
+                setHiddenInput('envelope-update-id', envelope.id);
+            });
+
             const envelopeHeader = createElement(envelopeDiv, 'div', {
                 className: 'envelope-header',
                 text: envelope.name + ' - ' + toMoneyStr(envelope.allocated)
@@ -82,7 +87,13 @@ const breakdown = (() => {
                     id: 'expense-' + expense.id,
                     className: 'expense'
                 });
+
                 registerOpenButtonForModal(Modals.EXPENSE_UPDATE, expenseDiv.id);
+                expenseDiv.addEventListener('click', () => {
+                    setHiddenInput('expense-update-id', expense.id);
+                    setHiddenInput('expense-update-envelope-id', envelope.id);
+                });
+
                 const expenseHeader = createElement(expenseDiv, 'div', {
                     className: 'expense-header',
                     text: toMoneyStr(expense.cost)

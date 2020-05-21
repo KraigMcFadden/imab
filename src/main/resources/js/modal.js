@@ -39,7 +39,7 @@ function setupModal(modalEnum) {
 }
 
 function registerOpenButtonForModal(modalEnum, openButtonId) {
-    console.log('Registering open button ' + openButtonId + ' for modal ' + modalEnum.id);
+    console.debug('Registering open button ' + openButtonId + ' for modal ' + modalEnum.id);
 
     const modal = document.getElementById(modalEnum.id);
     const openButton = document.getElementById(openButtonId);

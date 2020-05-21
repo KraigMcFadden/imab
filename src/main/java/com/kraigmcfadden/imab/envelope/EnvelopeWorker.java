@@ -33,4 +33,14 @@ public class EnvelopeWorker {
         Optional<Envelope> envelope = envelopeRepository.get(id);
         return envelope.orElseThrow(() -> { throw new NotFoundException("Envelope with id " + id + " not found in database"); });
     }
+
+    public Envelope update(EnvelopeUpdate envelopeUpdate) {
+        Envelope.Builder builder = Envelope.newBuilder()
+                .from(get(envelopeUpdate.getEnvelopeId()));
+        envelopeUpdate.getNewEnvelopeAllocated().ifPresent(builder::withAllocated);
+        envelopeUpdate.getNewEnvelopeName().ifPresent(builder::withName);
+        Envelope envelope = builder.build();
+        envelopeRepository.update(envelope);
+        return envelope;
+    }
 }
