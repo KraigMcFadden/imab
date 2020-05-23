@@ -37,4 +37,16 @@ public class ExpenseWorker {
         Optional<Expense> expense = expenseRepository.get(id);
         return expense.orElseThrow(() -> { throw new NotFoundException("Expense with id " + id + " not found in database"); });
     }
+
+    public Expense update(ExpenseUpdate expenseUpdate) {
+        Expense.Builder builder = Expense.newBuilder()
+                .from(get(expenseUpdate.getExpenseId()));
+        expenseUpdate.getNewExpenseCost().ifPresent(builder::withCost);
+        expenseUpdate.getNewExpenseDate().ifPresent(builder::withDate);
+        expenseUpdate.getNewExpenseDescription().ifPresent(builder::withDescription);
+        expenseUpdate.getNewExpenseEnvelopeId().ifPresent(builder::withEnvelopeId);
+        Expense expense = builder.build();
+        expenseRepository.update(expense);
+        return expense;
+    }
 }

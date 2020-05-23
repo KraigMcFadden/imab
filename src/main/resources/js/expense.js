@@ -29,9 +29,9 @@ document.getElementById('expense-update-submit-button')
             const index = state.expenses.findIndex((element) => element.id === expense.id);
             if (index === -1) {
                 console.error("Did not find a valid expense in the state to replace, just pushing");
-                state.envelopes.push(expense);
+                state.expenses.push(expense);
             } else {
-                state.envelopes[index] = expense;
+                state.expenses[index] = expense;
             }
             summary.update();
             breakdown.update();

@@ -69,6 +69,17 @@ public class Expense {
         private String envelopeId;
         private String budgetId;
 
+        public Builder from(Expense expense) {
+            this.id = expense.id;
+            this.description = expense.description;
+            this.cost = expense.cost;
+            this.date = expense.date;
+            this.accountId = expense.accountId;
+            this.envelopeId = expense.envelopeId;
+            this.budgetId = expense.budgetId;
+            return this;
+        }
+
         public Builder withId(String id) {
             this.id = id;
             return this;

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kraigmcfadden.imab.common.NotFoundException;
 import com.kraigmcfadden.imab.common.ValidationException;
 import com.kraigmcfadden.imab.envelope.Envelope;
+import com.kraigmcfadden.imab.envelope.EnvelopeUpdate;
+import com.kraigmcfadden.imab.envelope.UpdateEnvelopeRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +66,32 @@ public class ExpenseService {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             log.error("Could not get expense " + expenseId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @RequestMapping(path = RESOURCE + "/{expenseId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Expense> updateExpense(@PathVariable String expenseId,
+                                                 @RequestBody UpdateExpenseRequest request) {
+        try {
+            log.info("Update expense " + expenseId + " requested with request " + new ObjectMapper().writeValueAsString(request));
+            // TODO: validation layer
+            Expense expense = expenseWorker.update(
+                    new ExpenseUpdate(expenseId)
+                            .setNewExpenseDescription(request.getDescription())
+                            .setNewExpenseCost(request.getCost())
+                            .setNewExpenseDate(request.getDate())
+                            .setNewExpenseEnvelopeId(request.getEnvelopeId())
+            );
+            return ResponseEntity.ok(expense);
+        } catch (ValidationException e) {
+            log.error("Invalid input expense id " + expenseId, e);
+            return ResponseEntity.badRequest().build();
+        } catch (NotFoundException e) {
+            log.error("Expense id not found in our database " + expenseId, e);
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Could not update expense " + expenseId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
