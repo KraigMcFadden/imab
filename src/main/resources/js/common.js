@@ -25,6 +25,11 @@ function createElement(parentElement, type, params) {
         const textNode = document.createTextNode(params.text);
         element.appendChild(textNode);
     }
+    if (params.style) {
+        for (const key of Object.keys(params.style)) {
+            element.style[key] = params.style[key];
+        }
+    }
     return element;
 }
 

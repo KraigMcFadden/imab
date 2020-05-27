@@ -2,7 +2,6 @@ body {
     color: white;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: black;
-
 }
 
 h1 {
@@ -17,6 +16,16 @@ h3 {
 }
 
 h4 {
+}
+
+.right-align {
+    text-align: right;
+}
+
+.fill-color {
+    background-color: darkgreen;
+    width: 10%;
+    white-space: nowrap;
 }
 
 .contents {

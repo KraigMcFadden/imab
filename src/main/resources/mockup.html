@@ -10,12 +10,18 @@
 <body>
 
 <div class="contents">
-    <div class="summary">
-        <span><h2>Cash:</h2></span>
-        <span><h1>$2500.00</h1></span>
+    <section class="summary">
+<!--    <div class="summary">-->
+<!--        <span><h2>Cash:</h2></span>-->
+<!--        <span><h1>$2500.00</h1></span>-->
 
-    </div>
+        <h2>Cash:</h2>
+        <h1>$2500</h1>
 
+<!--    </div>-->
+    </section>
+
+    <section>
     <div class="envelope" id="env1" onclick="showExpense('env1', 'ex1')">
         <h3> Gifts <span class="monetary">$100</span></h3>
         <div class="expense" id="ex1">
@@ -27,11 +33,11 @@
     </div>
 
     <div class="envelope">
-        <h3> Tithe $100 </h3>
+        <h3> Tithe <span class="monetary">$100</span> </h3>
     </div>
 
     <button class="round" id="addEnvelopeButton">+</button>
-
+    </section>
 </div>
 
 <script>

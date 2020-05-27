@@ -5,8 +5,9 @@ const summary = (() => {
     const SUMMARY_HEADER_CLASS = 'summary-header';
     const SUMMARY_CONTENT_CLASS = 'summary-content';
 
-    const createLineItem = (id, header, content) => {
-        const section = document.getElementById(SECTION_ID);
+    const section = document.getElementById(SECTION_ID);
+
+    const createLineItem = (id, header, content, width, bgc) => {
         const lineItem = createElement(section, 'div', {
             id: id,
             className: SUMMARY_LINE_ITEM_CLASS
@@ -17,16 +18,19 @@ const summary = (() => {
         });
         createElement(lineItem, 'div', {
             className: SUMMARY_CONTENT_CLASS,
-            text: content
+            text: content,
+            style: {
+                width: width,
+                backgroundColor: bgc
+            }
         })
     }
 
     const createCash = () => {
-        createLineItem(
-            SECTION_ID + '.cash',
-            'Cash:',
-            toMoneyStr(state.budget.openingBalance)
-        );
+        createElement(section, 'h2', { text: 'Cash:' });
+        createElement(section, 'h1', {
+            text: toMoneyStr(state.budget.openingBalance)
+        });
     };
 
     const createAllocated = () => {
@@ -38,7 +42,9 @@ const summary = (() => {
         createLineItem(
             SECTION_ID + '.allocated',
             'Allocated:',
-            toMoneyStr(allocated) + ' (' + Math.round(100 * allocated / available) + '%)'
+            toMoneyStr(allocated),
+            (Math.round(100 * allocated / available)) + '%',
+            allocated > available ? 'red' : 'midnightblue'
         );
     };
 
@@ -50,16 +56,20 @@ const summary = (() => {
         }
         createLineItem(
             SECTION_ID + '.consumed',
-            'Consumed ($):',
-            toMoneyStr(totalExpense) + ' (' + Math.round(100 * totalExpense / available) + '%)'
+            'Consumed:',
+            toMoneyStr(totalExpense),
+            (Math.round(100 * totalExpense / available)) + '%',
+            totalExpense > available ? 'red' : 'midnightblue'
         );
     };
 
     const update = () => {
         clearAllChildElements(SECTION_ID);
-        createCash();
-        createAllocated();
-        createConsumed();
+        if (state.budget) {
+            createCash();
+            createAllocated();
+            createConsumed();
+        }
     };
 
     return {

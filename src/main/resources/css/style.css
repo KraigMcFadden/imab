@@ -1,14 +1,12 @@
 * {
     box-sizing: border-box;
-    color: black;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1em;
-    line-height: 1.5;
 }
 
 body {
-    background-color: white;
     margin: 0;
+    background-color: black;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 button {
@@ -24,56 +22,73 @@ button {
     border: none;
 }
 
-main {
-    width: 100vw;
-    padding-left: 1%;
+button.round {
+    border-radius: 100%;
+    border: none;
+    text-align: center;
 }
 
-section {
-    width: 100vw;
-    padding: 1% 0;
+main {
+    width: 583px;
+    position: relative;
+    margin: auto;
+    /*border-right: 1px solid #555555;*/
+    /*border-left: 1px solid #555555;*/
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
 }
 
 .hidden {
     display: none;
 }
 
+#summary {
+    border-bottom: 1px solid #555555;
+    margin-bottom: 1rem;
+}
+
 .summary-line-item {
-    background-color: whitesmoke;
-    display: inline-block;
-    margin-right: 0.5%;
-    padding: 0.5% 1%;
-    min-width: 15vw;
+    display: block;
+    margin-bottom: 1%;
 }
 
 .summary-header {
-    font-size: 1em;
+    font-size: 2em;
     font-weight: bold;
     text-align: left;
-    color: #555555;
 }
 
 .summary-content {
-    font-size: 2em;
+    font-size: 3em;
     text-align: right;
-    color: #555555;
-}
-
-#account-section,
-#timeblock-select-section {
-    background-color: #201E1F;
+    white-space: nowrap;
+    color: white;
+    padding: 1% 0;
+    max-width: 100%;
 }
 
 .envelope {
-    background-color: white;
-    color: white;
-    border-bottom: 1px gray solid;
-    width: 50%;
-    padding: 1%;
+    padding: 1rem 1rem 1rem 1rem;
+    margin-bottom: .5rem;
+    border-left: 4px solid midnightblue;
 }
 
 .envelope:hover {
-    border: 1px black solid;
+    background-color: midnightblue;
 }
 
 .envelope-header {
@@ -87,21 +102,58 @@ section {
     color: white;
 }
 
+.expenses {
+    display: none;
+    margin-left: 1rem;
+    overflow: auto;
+}
+
 .expense {
-    border-bottom: 1px gray solid;
-    color: white;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #5d61af;
 }
 
-.expense:hover {
-    border: 1px black solid;
+.monetary {
+    float: right;
 }
 
-.expense-header {
-    font-size: 1.5em;
-    font-weight: bold;
+.add-envelope-button {
+    background-color: midnightblue;
     color: white;
+    width: 4rem;
+    height: 4rem;
+    margin: 2rem 0 2rem 0;
+    float: right;
+    font-size: 2rem;
 }
 
-.expense-content {
+.add-expense-button {
+    background-color: black;
     color: white;
+    width: 3rem;
+    height: 3rem;
+    margin-top: 2rem;
+    float: right;
+    font-size: 1rem;
+}
+
+/* Phone style */
+@media screen and (max-width: 414px) {
+    .contents {
+        width: 100%;
+    }
+}
+
+
+@media screen and (min-width: 415px) and (max-width: 768px) {
+
+    .contents {
+        width: 70%;
+    }
+}
+
+/* Computer style, above iPad portrait mode width */
+@media screen and (min-width:769px) {
+
+
 }
